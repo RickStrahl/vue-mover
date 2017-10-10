@@ -95,6 +95,33 @@ var app = new Vue({
 });
 ```
 
+### Multiple Movers
+You can drop multiple movers on the page. If you do be sure to give each mover a seperate `target-id`
+
+```html
+<mover :left-items="unselectedItems2" :right-items="selectedItems2"
+       target-id="Mover2"></mover>  
+```
+
+and ensure that each has separate set of data sources for left and right items.
+
+### Styling
+You can override the styling of the various styles in the `vue-mover.css` style sheet. The mover overall should be self contained, but the height is probably one you'll want to adjust:
+
+```html
+<style>
+    /* override panel height */
+    #Mover .mover-panel {
+        height: 500px;
+    }
+    #Mover2 .mover-panel {
+        height: 300px;
+    }
+</style>
+```
+
+If you have multiple movers prefix your tags with the mover's target id to keep the CSS separate. The default ID is `Mover`.
+
 ### Dependencies
 
 * [font-awesome](http://fontawesome.io)

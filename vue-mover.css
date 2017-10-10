@@ -1,7 +1,6 @@
 .mover-container {
     display: flex;
     flex-flow:  row nowrap;  
-    background: cornsilk;  
 }
 
 .mover-panel {

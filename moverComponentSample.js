@@ -122,7 +122,7 @@ var vm = {
     }
 
     alert('ready to save ' + vm.selectedItems.length + 
-         ' items.\r\n' + s);
+         ' items from Top Mover.\r\n' + s);
   }
 } 
 
