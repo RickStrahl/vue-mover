@@ -2,7 +2,7 @@
 
 A simple list picker vue-component, with drag and drop and sortable items.
 
-> Note: this is a playground component as I'm experimenting and figuring out Vue. use at your own risk. Feedback welcome.
+> Note: this is a playground component as I'm experimenting and figuring out Vue. use at your own risk. [Feedback welcome](https://github.com/RickStrahl/vue-mover/issues).
 
 * [Try it out](https://rawgit.com/RickStrahl/vue-mover/master/moverComponentSample.html)
 
@@ -23,20 +23,22 @@ Inside of a Vue application use this markup:
 <script src="vue-mover.js"></script>
 
 
-<mover :left-items="selectedItems"
+<mover 
+     target-id="MyMover"
+     :left-items="selectedItems"
      :right-items="unselectedItems"
      titleLeft="Available Items"
      titleRight="Selected Items">
 </mover>
 ```
 
-where left and right items are properties on the view model.
+where left and right items are array properties on the view model.
 
 To set up the model load:
 
 ```
 var vm = {
-  message: "Vue Mover Component Sample",
+  pageTitle: "Vue Mover Component Sample",
   unselectedItems: [
     {
         value: "vitem1",

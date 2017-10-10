@@ -64,24 +64,30 @@
     var vue = Vue.component("mover", {
         vue: vue,
         props: {
+            // Left side title - defaults to Available
             titleLeft: {
                 type: String,
                 default: 'Available'
             },
+            // Right side title - defaults to Selected
             titleRight: {
                 type: String,
                 default: 'Selected'
             },
+            // Array of objects to bind to left list. { value: "xxx", displayValue: "show", isSelected: false}
             leftItems: Array,
-            rightItems: Array,
-            fontAwesomeAvailable: {
-                type: Boolean,
-                default: true
-            },
+            // Array of objects to bind right list. { value: "xxx", displayValue: "show", isSelected: false}
+            rightItems: Array,            
+            // The ID assigned to the wrapping element of this component
             targetId: { 
                 type: String,
                 default: "Mover"
-            },    
+            },  
+            // determines whether duplicated values are cleared in left items
+            normalizeLists: {
+                type: Boolean,
+                default: true
+            }  
         },
         template: '<div :id="targetId" class="mover-container">' + '\n' +
         '    <div id="MoverLeft" class="mover-panel">' + '\n' +
@@ -151,8 +157,9 @@
 
                     var el2 = document.getElementById(targetId + 'RightItems');
                     vm.selectedSortable = Sortable.create(el2, options);
-
-                    vm.normalizeLists();
+                    
+                    if (vue.normalizeLists)
+                        vm.normalizeLists();
                 },
                 selectItem: function (item, items) {
                     if (!item) {

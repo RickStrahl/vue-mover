@@ -1,5 +1,5 @@
 var vm = {
-  message: "Vue Mover Component Sample",
+  pageTitle: "Vue Mover Component Sample",
   unselectedItems: [
     {
         value: "vitem1",

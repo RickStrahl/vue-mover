@@ -12,26 +12,28 @@
     [v-cloak] {display: none}
     </style>  
     <style>
-        /* override panel height */
+        /* override panel height for second panel */
         #Mover2 .mover-panel {
             height: 300px;
+        }
+        #Mover2 {
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div id="Body">
-        <h1>{{message}}</h1>
+    <div id="Body" style="padding: 10px;">
+        <h1>{{pageTitle}}</h1>
         <div class="container" style="margin-top: 80px">
             
             <mover :left-items="unselectedItems" :right-items="selectedItems"
-                   title-left="Available Items" title-right="Selected Items" v-cloak
-                ></mover>
+                   title-left="Available Items" title-right="Selected Items" 
+                   v-cloak></mover>
 
 
              <mover :left-items="unselectedItems2" :right-items="selectedItems2"
                 title-left="Available Items" title-right="Selected Items" v-cloak
-                target-id="Mover2" style="margin-top: 40px;"
-             ></mover>  
+                target-id="Mover2"></mover>             
             
             <hr />            
             <button class="btn btn-primary" @click="saveItems()" >Show Selected Items</button> 
