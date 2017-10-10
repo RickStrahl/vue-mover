@@ -254,10 +254,10 @@
                         return;
 
                     setTimeout(function () {
-                        list.splice(e.oldIndex - 1, 1);
+                        list.splice(e.oldIndex , 1);
                         console.log("removed", e.oldIndex, e.newIndex, list);
 
-                        list.splice(e.newIndex - 1, 0, item);
+                        list.splice(e.newIndex, 0, item);
 
                         if (side == "left") {
                             vm.unselectedItems = list;
@@ -282,7 +282,7 @@
                         var item = vm.unselectedItems.find(function (itm) {
                             return itm.value == key;
                         });
-                        vm.moveRight(item, insertAt - 1);
+                        vm.moveRight(item, insertAt);
                         item.isSelected = true;
 
                         // force list to refresh
@@ -297,7 +297,7 @@
                             return itm.value == key;
                         });
                         item.isSelected = true;
-                        vm.moveLeft(item, insertAt - 1);
+                        vm.moveLeft(item, insertAt);
 
                         // force list to refresh completely
                         var list = vm.selectedItems;
