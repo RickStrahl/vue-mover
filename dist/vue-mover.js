@@ -120,14 +120,14 @@
     });             
 */
 
-console.log('initial call');
-// var Sortable = typeof require === 'function'
-//     ? require('sortablejs')
-//     : window.Sortable
+console.log('vue mover startup');
 
-// if (!Sortable) {
-//     throw new Error('[vue-mover] cannot locate `Sortablejs` dependency.')
-// }
+// var Sortable = typeof require === 'function'
+//      ? require('sortablejs')
+//      : window.Sortable
+if (!Sortable) {
+    throw new Error('[vue-mover] cannot locate `Sortablejs` dependency.')
+}
 
 var vue = Vue.component("mover", {
     vue: vue,
@@ -158,9 +158,9 @@ var vue = Vue.component("mover", {
         }
     },
     template: '<div :id="targetId" class="mover-container">' + '\n' +
-    '    <div id="MoverLeft" class="mover-panel">' + '\n' +
+    '    <div id="MoverLeft" class="mover-panel-box">' + '\n' +
     '        <div class="mover-header">{{titleLeft}}</div>' + '\n' +
-    '        <div :id="targetId + \'LeftItems\'" style="overflow-y: auto;">\n' +
+    '        <div :id="targetId + \'LeftItems\'" class="mover-panel">\n' +
     '        <div class="mover-item"' + '\n' +
     '                v-for="item in unselectedItems"' + '\n' +
     '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
@@ -186,9 +186,9 @@ var vue = Vue.component("mover", {
     '' + '\n' +
     '    </div>' + '\n' +
     '' + '\n' +
-    '    <div id="MoverRight" class="mover-panel">' + '\n' +
+    '    <div id="MoverRight" class="mover-panel-box">' + '\n' +
     '        <div class="mover-header">{{titleRight}}</div>' + '\n' +
-    '        <div :id="targetId + \'RightItems\'" style="overflow-y: auto;">\n' +
+    '        <div :id="targetId + \'RightItems\'" class="mover-panel" style="overflow-y: auto;">\n' +
     '        <div class="mover-item"' + '\n' +
     '                v-for="item in selectedItems"' + '\n' +
     '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
@@ -199,7 +199,6 @@ var vue = Vue.component("mover", {
     '    </div>' + '\n' +
     '</div>' + '\n',
     data: function () {
-        console.log("vue-mover Model retrieved" + this.targetId)
         var vm = {
             selectedSortable: null,
             selectedItem: {},
@@ -216,7 +215,8 @@ var vue = Vue.component("mover", {
                     chosenClass: "mover-selected",
                     onAdd: vm.onListDrop,
                     onUpdate: vm.onSorted,
-                    //onEnd: vm.OnSorted
+                    onEnd: vm.OnEnd,
+                    onMove: vm.onMove
                 };
 
                 var targetId = vue.targetId;
@@ -325,6 +325,7 @@ var vue = Vue.component("mover", {
                 }, 10);
             },
             onSorted: function (e) {
+                console.log("on sorted fired: ", e.item,e.oldIndex, e.newIndex);                
 
                 var key = e.item.dataset["id"];
                 var side = e.item.dataset["side"];
@@ -342,6 +343,7 @@ var vue = Vue.component("mover", {
                 var item = list.find(function (itm) {
                     return itm.value == key;
                 });
+                
                 if (!item)
                     return;
 
@@ -362,7 +364,7 @@ var vue = Vue.component("mover", {
                 });
             },
             onListDrop: function (e) {
-                console.log("onListUpdated");
+                console.log("onListDrop");
                 var key = e.item.dataset["id"];
                 var side = e.item.dataset["side"];
                 var insertAt = e.newIndex;
@@ -399,6 +401,12 @@ var vue = Vue.component("mover", {
                     });
                 }
 
+            },
+            onEnd: function(e) {
+                console.log("on end fired",e);
+            },
+            onMove: function(e) {
+                console.log("on move fired",e);
             },
             // removes dupes from unselected list that exist in selected items
             normalizeListValues: function () {

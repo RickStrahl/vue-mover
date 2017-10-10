@@ -22,7 +22,6 @@ Inside of a Vue application use this markup:
 <script src="scripts/Sortable.min.js"></script>    
 <script src="vue-mover.js"></script>
 
-
 <mover 
      target-id="MyMover"
      :left-items="selectedItems"
@@ -32,7 +31,7 @@ Inside of a Vue application use this markup:
 </mover>
 ```
 
-where left and right items are array properties on the view model.
+where **left** and **right** items are array properties on the view model.
 
 To set up the model load:
 
