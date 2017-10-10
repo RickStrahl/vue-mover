@@ -1,6 +1,28 @@
+var CopyWebpackPlugin = require('copy-webpack-plugin');
+var path = require('path');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
 module.exports = {
-    entry: './app.js',
-    output: {
-      filename: 'bundle.js'
+  entry: './vue-mover.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'vue-mover.min.js',    
+  },
+  plugins: [    
+    new UglifyJSPlugin( { sourceMap: true }),
+    new ExtractTextPlugin("styles.css"),
+    new OptimizeCssAssetsPlugin({
+      assetNameRegExp: /\.optimize\.css$/g,
+      cssProcessor: require('cssnano'),
+      cssProcessorOptions: { discardComments: {removeAll: true } },
+    })
+
+  ],
+  externals: {
+    sortablejs: {      
+      root: "Sortable"
     }
   }
+};

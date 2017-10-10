@@ -1,3 +1,5 @@
+//import vmover from 'vue-mover'
+
 var vm = {
   pageTitle: "Vue Mover Component Sample",
   unselectedItems: [

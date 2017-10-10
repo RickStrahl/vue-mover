@@ -1,0 +1,32 @@
+{
+  "name": "vue-mover",
+  "version": "0.1.0",
+  "description": "A simple list picker vue-component, with drag and drop and sortable items.",
+  "main": "vue-mover.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config webpack.debug.config.js && webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RickStrahl/vue-mover.git"
+  },
+  "keywords": [],
+  "author": "Rick Strahl, West Wind Technologies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RickStrahl/vue-mover/issues"
+  },
+  "homepage": "https://github.com/RickStrahl/vue-mover#readme",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.1.1",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "optimize-css-assets-webpack-plugin": "^3.2.0",
+    "uglifyjs-webpack-plugin": "^1.0.0-beta.3",
+    "webpack": "^3.6.0"
+  },
+  "dependencies": {
+    "sortablejs": "^1.6.1",
+    "vue": "^2.4.4"
+  }
+}
