@@ -129,4 +129,11 @@ If you have multiple movers prefix your tags with the mover's target id to keep 
 * [font-awesome](http://fontawesome.io)
 * [sortable js](http://rubaxa.github.io/Sortable/)
 
+### Build
+Output is built with WebPack.
 
+To build use:
+
+```
+npm run build
+```
