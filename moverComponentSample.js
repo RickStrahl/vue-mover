@@ -25,7 +25,55 @@ var vm = {
         value: "vitem5",
         displayValue: "vItem 5",
         isSelected: false
+    },
+    {
+        value: "vitem6",
+        displayValue: "vItem 6",
+        isSelected: false
+    },
+    {
+        value: "vitem7",
+        displayValue: "vItem 7",
+        isSelected: false
+    },
+    {
+        value: "vitem8",
+        displayValue: "vItem 8",
+        isSelected: false
+    },
+    {
+        value: "vitem9",
+        displayValue: "vItem 9",
+        isSelected: false
+    },
+    {
+        value: "vitem10",
+        displayValue: "vItem 10",
+        isSelected: false
+    },
+    {
+        value: "vitem11",
+        displayValue: "vItem 11",
+        isSelected: false
+    },
+    {
+        value: "vitem12",
+        displayValue: "vItem 12",
+        isSelected: false
+    },
+    {
+        value: "vitem13",
+        displayValue: "vItem 13",
+        isSelected: false
+    },
+    {
+        value: "vitem14",
+        displayValue: "vItem 14",
+        isSelected: false
     }
+
+
+    
   ],
   unselectedSortable: null,
   selectedItems: [

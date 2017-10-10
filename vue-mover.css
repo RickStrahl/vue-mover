@@ -9,8 +9,10 @@
     background: #f9f9f9;
     height: 400px;
     border-radius: 3px;
-    overflow: auto;
-
+    overflow: hidden;    
+    
+    display: flex;
+    flex-direction: column
 }
 .mover-controls {
     flex: 60px 60px 60px;

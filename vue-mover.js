@@ -70,14 +70,16 @@
             },
         },
         template: '<div id="Mover" class="mover-container">' + '\n' +
-        '    <div id="MoverLeft" class="mover-left-panel ">' + '\n' +
+        '    <div id="MoverLeft" class="mover-left-panel">' + '\n' +
         '        <div class="mover-header">{{titleLeft}}</div>' + '\n' +
+        '        <div id="MoverLeftItems" style="overflow-y: auto;">\n' +
         '        <div class="mover-item"' + '\n' +
         '                v-for="item in unselectedItems"' + '\n' +
         '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
         '                v-on:click="selectItem(item, unselectedItems)"' + '\n' +
-        '                :data-id="item.value" data-side="left" data-item="item"' + '\n' +
+        '                :data-id="item.value" data-side="left"' + '\n' +
         '                >{{item.displayValue}}</div>' + '\n' +
+        '         </div>\n' +
         '    </div>' + '\n' +
         '' + '\n' +
         '    <div class="mover-controls" style="margin-top: 5%">' + '\n' +
@@ -98,12 +100,14 @@
         '' + '\n' +
         '    <div id="MoverRight" class="mover-right-panel">' + '\n' +
         '        <div class="mover-header">{{titleRight}}</div>' + '\n' +
+        '        <div id="MoverRightItems" style="overflow-y: auto;">\n' +
         '        <div class="mover-item"' + '\n' +
         '                v-for="item in selectedItems"' + '\n' +
         '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
         '                v-on:click="selectItem(item, selectedItems)"' + '\n' +
         '                :data-id="item.value" data-side="right"' + '\n' +
         '                >{{item.displayValue}}</div>' + '\n' +
+        '         </div>\n' +
         '    </div>' + '\n' +
         '</div>' + '\n',
         data: function () {
@@ -125,10 +129,10 @@
                         //onEnd: vm.OnSorted
                     };
 
-                    var el = document.getElementById('MoverLeft');
+                    var el = document.getElementById('MoverLeftItems');
                     vm.unselectedSortable = Sortable.create(el, options);
 
-                    var el2 = document.getElementById('MoverRight');
+                    var el2 = document.getElementById('MoverRightItems');
                     vm.selectedSortable = Sortable.create(el2, options);
 
                     vm.normalizeLists();
