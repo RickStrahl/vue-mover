@@ -4,6 +4,8 @@ A simple list picker vue-component, with drag and drop and sortable items.
 
 > Note: this is a playground component as I'm experimenting and figuring out Vue. use at your own risk. Feedback welcome.
 
+* [Try it out](https://rawgit.com/RickStrahl/vue-mover/master/moverComponentSample.html)
+
 Support:
 
 * Moving items between two list displays
