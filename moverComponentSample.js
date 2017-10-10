@@ -71,11 +71,7 @@ var vm = {
         displayValue: "vItem 14",
         isSelected: false
     }
-
-
-    
   ],
-  unselectedSortable: null,
   selectedItems: [
     {
         value: "xitem3",
@@ -93,7 +89,30 @@ var vm = {
         isSelected: false
     }
   ],    
-
+  unselectedItems2: [
+    {
+        value: "witem1",
+        displayValue: "wItem 1",
+        isSelected: false
+    },
+    {
+        value: "witem2",
+        displayValue: "wItem 2",
+        isSelected: false
+    },
+    {
+        value: "witem3",
+        displayValue: "wItem 3",
+        isSelected: false
+    }      
+  ],
+  selectedItems2: [
+    {
+        value: "yitem1",
+        displayValue: "yItem 1",
+        isSelected: false
+    },    
+  ],
   saveItems: function() {
     var s = "";
            

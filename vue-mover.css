@@ -1,13 +1,15 @@
 .mover-container {
     display: flex;
-    flex-flow:  row nowrap;    
+    flex-flow:  row nowrap;  
+    background: cornsilk;  
 }
 
-.mover-left-panel, .mover-right-panel {
+.mover-panel {
     flex: 1 1 auto;
     border: 1px solid #999 !important;
     background: #f9f9f9;
     height: 400px;
+    min-height: 270px;
     border-radius: 3px;
     overflow: hidden;    
     
@@ -15,8 +17,9 @@
     flex-direction: column
 }
 .mover-controls {
-    flex: 60px 60px 60px;
-    padding: 50px;
+    flex: 0 0 auto;
+    align-self: center;
+    padding: 0 30px;
 }
 .mover-controls>button {
     padding: 10px;

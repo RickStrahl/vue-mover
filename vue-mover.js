@@ -52,7 +52,17 @@
 */
 
 (function () {
+    console.log('initial call');
+    var Sortable = typeof require === 'function'
+        ? require('sortablejs')
+        : window.Sortable
+
+    if (!Sortable) {
+        throw new Error('[vue-mover] cannot locate `Sortablejs` dependency.')
+    }
+
     var vue = Vue.component("mover", {
+        vue: vue,
         props: {
             titleLeft: {
                 type: String,
@@ -68,11 +78,15 @@
                 type: Boolean,
                 default: true
             },
+            targetId: { 
+                type: String,
+                default: "Mover"
+            },    
         },
-        template: '<div id="Mover" class="mover-container">' + '\n' +
-        '    <div id="MoverLeft" class="mover-left-panel">' + '\n' +
+        template: '<div :id="targetId" class="mover-container">' + '\n' +
+        '    <div id="MoverLeft" class="mover-panel">' + '\n' +
         '        <div class="mover-header">{{titleLeft}}</div>' + '\n' +
-        '        <div id="MoverLeftItems" style="overflow-y: auto;">\n' +
+        '        <div :id="targetId + \'LeftItems\'" style="overflow-y: auto;">\n' +
         '        <div class="mover-item"' + '\n' +
         '                v-for="item in unselectedItems"' + '\n' +
         '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
@@ -82,7 +96,7 @@
         '         </div>\n' +
         '    </div>' + '\n' +
         '' + '\n' +
-        '    <div class="mover-controls" style="margin-top: 5%">' + '\n' +
+        '    <div class="mover-controls" >' + '\n' +
         '        <button v-on:click="moveAllRight()">' + '\n' +
         '                <i class="fa fa-forward fa-1.5x" aria-hidden="true"></i>' + '\n' +
         '        </button>' + '\n' +
@@ -98,9 +112,9 @@
         '' + '\n' +
         '    </div>' + '\n' +
         '' + '\n' +
-        '    <div id="MoverRight" class="mover-right-panel">' + '\n' +
+        '    <div id="MoverRight" class="mover-panel">' + '\n' +
         '        <div class="mover-header">{{titleRight}}</div>' + '\n' +
-        '        <div id="MoverRightItems" style="overflow-y: auto;">\n' +
+        '        <div :id="targetId + \'RightItems\'" style="overflow-y: auto;">\n' +
         '        <div class="mover-item"' + '\n' +
         '                v-for="item in selectedItems"' + '\n' +
         '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
@@ -111,6 +125,7 @@
         '    </div>' + '\n' +
         '</div>' + '\n',
         data: function () {
+            console.log("vue-mover Model retrieved" + this.targetId)            
             var vm = {
                 selectedSortable: null,
                 selectedItem: {},
@@ -119,7 +134,8 @@
                 unselectedItems: this.leftItems,
                 fontAwesome: this.fontAwesomeAvailable,
 
-                initialize: function () {
+                // hook up sortable - call from end of data retrieval
+                initialize: function (vue) {
                     var options = {
                         group: "mover",
                         ghostClass: "mover-ghost",
@@ -129,10 +145,11 @@
                         //onEnd: vm.OnSorted
                     };
 
-                    var el = document.getElementById('MoverLeftItems');
+                    var targetId = vue.targetId;
+                    var el = document.getElementById(targetId + 'LeftItems');
                     vm.unselectedSortable = Sortable.create(el, options);
 
-                    var el2 = document.getElementById('MoverRightItems');
+                    var el2 = document.getElementById(targetId + 'RightItems');
                     vm.selectedSortable = Sortable.create(el2, options);
 
                     vm.normalizeLists();
@@ -325,20 +342,29 @@
                     }
                 }
             }
-
-            // initialization
-            document.addEventListener("DOMContentLoaded", function (event) {
-                vm.initialize();
-            });
+            
+            var vue = this;            
+            setTimeout(function() { vm.initialize(vue); });
 
             return vm;
         }
     });
+
+
+
+    if (typeof exports == "object") {
+        module.exports = vue;
+      } else if (typeof define == "function" && define.amd) {
+        define([], function () {
+          return vue;
+        })
+      } else if (window.Vue) {
+        window.vMover = vue;        
+      }
 })();
 
 
 // IE Array Polyfills
-
 
 // https://tc39.github.io/ecma262/#sec-array.prototype.find
 if (!Array.prototype.find) {
