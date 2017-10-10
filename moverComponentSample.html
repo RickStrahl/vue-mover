@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue-Mover Sample</title>
+    <link rel="stylesheet" href="scripts/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="scripts/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="vue-mover.css">        
+</head>
+<body>
+    <div  id="Body">
+        <h1>{{message}}</h1>
+        <div class="container" style="margin-top: 80px">
+            
+            <mover :left-items="unselectedItems" :right-items="selectedItems"
+                   title-left="Available Items" title-right="Selected Items"
+                ></mover>
+            
+            <hr />            
+            <button class="btn btn-primary" @click="saveItems()" >Show Selected Items</button> 
+            
+            <h3>Bound and updated model values</h3>
+            <pre>{{unselectedItems}}</pre>
+            <pre>{{selectedItems}}</pre>
+
+        </div>
+
+    </div>
+    
+    <script src="scripts/vue.js"></script>
+    <script src="scripts/Sortable.min.js"></script>    
+    <script src="vue-mover.js"></script>
+    <script src="moverComponentSample.js"></script>    
+</body>
+</html>
