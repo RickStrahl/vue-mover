@@ -2,7 +2,7 @@
 
 A simple list picker vue-component, with drag and drop and sortable items.
 
-> Note: this is a playground component as I'm experimenting and figuring out Vue. use at your own risk.
+> Note: this is a playground component as I'm experimenting and figuring out Vue. use at your own risk. Feedback welcome.
 
 Support:
 
@@ -92,4 +92,10 @@ var app = new Vue({
       data: function() { return vm; }
 });
 ```
+
+### Dependencies
+
+* [font-awesome](http://fontawesome.io)
+* [sortable js](http://rubaxa.github.io/Sortable/)
+
 

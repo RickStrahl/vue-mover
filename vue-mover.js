@@ -51,9 +51,9 @@
     });             
 */
 
-(function () {            
-    var vue = Vue.component("mover",{
-        props: {                        
+(function () {
+    var vue = Vue.component("mover", {
+        props: {
             titleLeft: {
                 type: String,
                 default: 'Available'
@@ -63,7 +63,7 @@
                 default: 'Selected'
             },
             leftItems: Array,
-            rightItems: Array,             
+            rightItems: Array,
             fontAwesomeAvailable: {
                 type: Boolean,
                 default: true
@@ -106,15 +106,15 @@
         '                >{{item.displayValue}}</div>' + '\n' +
         '    </div>' + '\n' +
         '</div>' + '\n',
-        data: function () { 
+        data: function () {
             var vm = {
                 selectedSortable: null,
                 selectedItem: {},
                 selectedList: null,
                 selectedItems: this.rightItems,
-                unselectedItems: this.leftItems,    
-                fontAwesome: this.fontAwesomeAvailable,            
-        
+                unselectedItems: this.leftItems,
+                fontAwesome: this.fontAwesomeAvailable,
+
                 initialize: function () {
                     var options = {
                         group: "mover",
@@ -124,21 +124,23 @@
                         onUpdate: vm.onSorted,
                         //onEnd: vm.OnSorted
                     };
-        
+
                     var el = document.getElementById('MoverLeft');
                     vm.unselectedSortable = Sortable.create(el, options);
-        
+
                     var el2 = document.getElementById('MoverRight');
                     vm.selectedSortable = Sortable.create(el2, options);
+
+                    vm.normalizeLists();
                 },
-                selectItem: function (item, items) {        
-                    if (!item){                                            
+                selectItem: function (item, items) {
+                    if (!item) {
                         if (items.length > 0)
                             item = items[0];
-                        if (!item) return;                     
+                        if (!item) return;
                     }
-                        
-                    console.log("selectItem: ",item, items);
+
+                    console.log("selectItem: ", item, items);
 
                     items.forEach(function (itm) {
                         itm.isSelected = false;
@@ -156,56 +158,81 @@
                     }
                     if (!item)
                         return;
-        
-                    // remove item and select next item
-                    var selectNext = false;           
-                    var idx = vm.unselectedItems.findIndex(function(itm) {
-                        return itm.value == item.value;
-                    } );
-                    vm.unselectedItems.splice(idx,1);     
-                    if (vm.unselectedItems.length > 0)                                   
-                        vm.selectItem(vm.unselectedItems[idx],vm.unselectedItems);
 
-                                        
+                    // remove item and select next item
+                    var selectNext = false;
+                    var idx = vm.unselectedItems.findIndex(function (itm) {
+                        return itm.value == item.value;
+                    });
+                    vm.unselectedItems.splice(idx, 1);
+                    if (vm.unselectedItems.length > 0)
+                        vm.selectItem(vm.unselectedItems[idx], vm.unselectedItems);
+
+
                     if (typeof index === "number")
                         vm.selectedItems.splice(index, 0, item);
                     else
                         vm.selectedItems.unshift(item);
-        
-                    setTimeout(function () { 
-                        vm.selectItem(item, vm.selectedItems); 
+
+                    setTimeout(function () {
+                        vm.selectItem(item, vm.selectedItems);
                     }, 10);
                 },
-                moveLeft: function (item, index) {                    
+                moveLeft: function (item, index) {
                     var item = vm.selectedItems.find(function (itm) {
                         return itm.isSelected;
                     });
-        
+
                     if (!item)
                         return;
-        
+
                     // remove item
                     var selectNext = false;
 
-                    var idx = vm.selectedItems.findIndex(function(itm) {
+                    var idx = vm.selectedItems.findIndex(function (itm) {
                         return itm.value == item.value;
-                    } );
-                    vm.selectedItems.splice(idx,1);
-                    if (vm.selectedItems.length > 0)                                   
-                        vm.selectItem(vm.selectedItems[idx],vm.selectedItems);
-                    
+                    });
+                    vm.selectedItems.splice(idx, 1);
+                    if (vm.selectedItems.length > 0)
+                        vm.selectItem(vm.selectedItems[idx], vm.selectedItems);
+
                     if (typeof index === "number")
                         vm.unselectedItems.splice(index, 0, item);
                     else
                         vm.unselectedItems.unshift(item);
-        
-                    setTimeout( function() { vm.selectItem(item, vm.unselectedItems); },10);
+
+                    setTimeout(function () { vm.selectItem(item, vm.unselectedItems); }, 10);
+                },
+                moveAllRight: function () {
+                    for (var i = vm.unselectedItems.length-1; i >= 0; i--) {
+                        var item = vm.unselectedItems[i];
+                        vm.unselectedItems.splice(i, 1);    
+                        vm.selectedItems.push(item);                                                                    
+                    }                    
+                },
+                moveAllLeft: function () {
+                    for (var i = vm.selectedItems.length - 1; i >= 0; i--) {
+                        var item = vm.selectedItems[i];
+                        vm.selectedItems.splice(i, 1);
+                        vm.unselectedItems.push(item);
+                    }
+                },
+                refreshListDisplay: function () {
+                    setTimeout(function () {
+                        var list = vm.selectedItems;
+                        vm.selectedItems = [];
+                        vm.selectedItems = list;
+
+                        list = vm.unselectedItems;
+                        vm.unselectedItems = [];
+                        vm.unselectedItems = list;
+                    }, 10);
                 },
                 onSorted: function (e) {
-                    
+
                     var key = e.item.dataset["id"];
                     var side = e.item.dataset["side"];
-        
+
                     var list;
                     if (side == "left") {
                         list = vm.unselectedItems;
@@ -215,19 +242,19 @@
                         list = vm.selectedItems;
                         vm.selectedItems = [];
                     }
-        
+
                     var item = list.find(function (itm) {
                         return itm.value == key;
                     });
                     if (!item)
                         return;
-        
+
                     setTimeout(function () {
-                        list.splice(e.oldIndex-1, 1);
-                        console.log("removed", e.oldIndex,e.newIndex, list);
-        
-                        list.splice(e.newIndex-1, 0, item);
-                        
+                        list.splice(e.oldIndex - 1, 1);
+                        console.log("removed", e.oldIndex, e.newIndex, list);
+
+                        list.splice(e.newIndex - 1, 0, item);
+
                         if (side == "left") {
                             vm.unselectedItems = list;
                             vm.selectItem(item, vm.unselectedItems);
@@ -236,8 +263,6 @@
                             vm.selectedItems = list;
                             vm.selectItem(item, vm.selectedItems);
                         }
-        
-                        console.log("done: ", vm.unselectedItems);
                     });
                 },
                 onListDrop: function (e) {
@@ -245,17 +270,17 @@
                     var key = e.item.dataset["id"];
                     var side = e.item.dataset["side"];
                     var insertAt = e.newIndex;
-        
+
                     // Hack! Remove the dropped item and let Vue handle rendering
                     //e.item.remove();
-        
+
                     if (side == "left") {
                         var item = vm.unselectedItems.find(function (itm) {
                             return itm.value == key;
-                        });                        
-                        vm.moveRight(item, insertAt-1);
+                        });
+                        vm.moveRight(item, insertAt - 1);
                         item.isSelected = true;
-        
+
                         // force list to refresh
                         var list = vm.unselectedItems;
                         vm.unselectedItems = [];
@@ -268,24 +293,42 @@
                             return itm.value == key;
                         });
                         item.isSelected = true;
-                        vm.moveLeft(item, insertAt-1);
-        
+                        vm.moveLeft(item, insertAt - 1);
+
                         // force list to refresh completely
                         var list = vm.selectedItems;
                         vm.selectedItems = [];
                         setTimeout(function () {
-                             vm.selectedItems = list;
+                            vm.selectedItems = list;
                         });
                     }
-        
+
+                },
+                // removes dupes from unselected list that exist in selected items
+                normalizeLists: function () {
+                    if (!vm.selectedItems || vm.selectedItems.length == 0 ||
+                        !vm.unselectedItems || vm.unselectedItems.length == 0)
+                        return;
+
+                    for (var i = 0; i < vm.selectedItems.length; i++) {
+                        var selected = vm.selectedItems[i];
+
+                        var idx = vm.unselectedItems.findIndex(function (itm) {
+                            return itm.value == selected.value;
+                        });
+                        if (idx > -1)
+                            vm.unselectedItems.splice(idx, 1);
+                    }
                 }
-        
             }
-            document.addEventListener("DOMContentLoaded", function(event) { 
+
+            // initialization
+            document.addEventListener("DOMContentLoaded", function (event) {
                 vm.initialize();
-              });
+            });
+
             return vm;
         }
-    });        
+    });
 })();
 

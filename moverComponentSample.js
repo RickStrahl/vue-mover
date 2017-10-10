@@ -38,6 +38,11 @@ var vm = {
         value: "xitem4",
         displayValue: "xItem 4",
         isSelected: false
+    },
+    {
+        value: "vitem5",
+        displayValue: "vItem 5",
+        isSelected: false
     }
   ],    
 

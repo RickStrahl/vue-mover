@@ -1,0 +1,10 @@
+{
+    "version": "0.1.0",
+    "command": "Chrome",
+    "windows": {
+        "command": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    },
+    "args": [
+        "${file}"
+    ]
+}
