@@ -97,14 +97,24 @@ var app = new Vue({
 ```
 
 ### Multiple Movers
-You can drop multiple movers on the page. If you do be sure to give each mover a seperate `target-id`
+You can drop multiple movers on the page. If you do be sure to give each mover a seperate `target-id` and a `group-name`:
 
 ```html
-<mover :left-items="unselectedItems2" :right-items="selectedItems2"
+<mover :left-items="unselectedItems2" 
+       :right-items="selectedItems2"
        target-id="Mover2"></mover>  
 ```
 
-and ensure that each has separate set of data sources for left and right items.
+`targetId` is required for a second mover to ensure that each gets its own unique scope.
+
+### Use without Font-Awesome
+By default the mover uses Font-Awesome icons for the mover buttons. If you don't use Font Awesome in your app and you don't want to add it, you can turn off use of Font awesome with:
+
+```html
+<mover :font-awesome=false></mover>
+```
+
+Note the binding requirement (:) in front.
 
 ### Styling
 You can override the styling of the various styles in the `vue-mover.css` style sheet. The mover overall should be self contained, but the height is probably one you'll want to adjust:

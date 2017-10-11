@@ -86,6 +86,10 @@ var vue = Vue.component("mover", {
         normalizeLists: {
             type: Boolean,
             default: true
+        },
+        fontAwesome: {
+            type: Boolean,
+            default: true
         }
     },
     template: '<div :id="targetId" class="mover-container">' + '\n' +
@@ -103,16 +107,20 @@ var vue = Vue.component("mover", {
     '' + '\n' +
     '    <div class="mover-controls" >' + '\n' +
     '        <button v-on:click="moveAllRight()">' + '\n' +
-    '                <i class="fa fa-forward fa-1.5x" aria-hidden="true"></i>' + '\n' +
+    '                <i v-if="fontAwesome" class="fa fa-forward fa-1.5x" aria-hidden="true"></i>' + '\n' +
+    '                <b v-if="!fontAwesome" aria-hidden="true">></b>' + '\n' +   
     '        </button>' + '\n' +
     '        <button v-on:click="moveRight()" style="margin-bottom: 30px;" >' + '\n' +
-    '            <i class="fa fa-caret-right fa-2x" aria-hidden="true"></i>' + '\n' +
+    '            <i v-if="fontAwesome" class="fa fa-caret-right fa-2x" aria-hidden="true"></i>' + '\n' +
+    '            <b v-if="!fontAwesome" aria-hidden="true">>></b>' + '\n' +   
     '        </button>' + '\n' +
     '        <button v-on:click="moveLeft()">' + '\n' +
-    '                <i class="fa fa-caret-left fa-2x" aria-hidden="true"></i>' + '\n' +
+    '            <i v-if="fontAwesome" class="fa fa-caret-left fa-2x" aria-hidden="true"></i>' + '\n' +
+    '            <b v-if="!fontAwesome" aria-hidden="true"><</b>' + '\n' +      
     '        </button>' + '\n' +
     '        <button v-on:click="moveAllLeft()">' + '\n' +
-    '                <i class="fa fa-backward" aria-hidden="true"></i>' + '\n' +
+    '            <i v-if="fontAwesome" class="fa fa-backward" aria-hidden="true"></i>' + '\n' +
+    '            <b v-if="!fontAwesome" aria-hidden="true"><<</b>' + '\n' +   
     '        </button>' + '\n' +
     '' + '\n' +
     '    </div>' + '\n' +
@@ -135,20 +143,19 @@ var vue = Vue.component("mover", {
             selectedItem: {},
             selectedList: null,
             selectedItems: this.rightItems,
-            unselectedItems: this.leftItems,
-            fontAwesome: this.fontAwesomeAvailable,
+            unselectedItems: this.leftItems,                       
 
             // hook up sortable - call from end of data retrieval
             initialize: function (vue) {
                 var options = {
-                    group: "mover",
+                    group: "_mvgp_" + new Date().getTime(),
                     ghostClass: "mover-ghost",
                     chosenClass: "mover-selected",
                     onAdd: vm.onListDrop,
                     onUpdate: vm.onSorted,
                     onEnd: vm.OnEnd,
                     onMove: vm.onMove
-                };
+                };                
 
                 var targetId = vue.targetId;
                 var el = document.getElementById(targetId + 'LeftItems');
