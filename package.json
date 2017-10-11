@@ -1,6 +1,6 @@
 {
   "name": "vue-mover",
-  "version": "0.1.0",
+  "version": "0.1.16",
   "description": "A simple list picker vue-component, with drag and drop and sortable items.",
   "main": "vue-mover.js",
   "scripts": {
@@ -11,7 +11,11 @@
     "type": "git",
     "url": "git+https://github.com/RickStrahl/vue-mover.git"
   },
-  "keywords": [],
+  "keywords": [
+    "vuejs",
+    "vue-component",
+    "mover"
+  ],
   "author": "Rick Strahl, West Wind Technologies",
   "license": "ISC",
   "bugs": {
