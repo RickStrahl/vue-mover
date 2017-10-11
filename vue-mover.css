@@ -5,7 +5,7 @@
 
 .mover-panel-box {
     flex: 1 1 auto;
-    border: 1px solid #999 !important;
+    border: 1px solid #ddd;
     background: #f9f9f9;
     
     border-radius: 3px;
@@ -15,7 +15,7 @@
     flex-direction: column
 }
 .mover-panel {
-    height: 280px !important;
+    height: 280px;
     min-height: 240px;
     overflow-y: auto !important;    
 }
