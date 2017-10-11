@@ -3,6 +3,8 @@
      -------------------
      by Rick Strahl, West Wind Technologies
 
+     Version 0.1.15
+     
      depends on: 
      -----------
      CSS:     
@@ -19,7 +21,9 @@
       <mover :left-items="selectedItems"
              :right-items="unselectedItems"
              titleLeft="Available Items"
-             titleRight="Selected Items">
+             titleRight="Selected Items"
+             :font-awesome="true"
+             targetId="MyMover">
        </mover>
 
     Vue code:
@@ -50,12 +54,6 @@
      }
     });             
 */
-
-console.log('vue mover startup');
-
-// var Sortable = typeof require === 'function'
-//      ? require('sortablejs')
-//      : window.Sortable
 if (!Sortable) {
     throw new Error('[vue-mover] cannot locate `Sortablejs` dependency.')
 }
@@ -106,19 +104,19 @@ var vue = Vue.component("mover", {
     '    </div>' + '\n' +
     '' + '\n' +
     '    <div class="mover-controls" >' + '\n' +
-    '        <button v-on:click="moveAllRight()">' + '\n' +
+    '        <button type="button" v-on:click="moveAllRight()">' + '\n' +
     '                <i v-if="fontAwesome" class="fa fa-forward fa-1.5x" aria-hidden="true"></i>' + '\n' +
     '                <b v-if="!fontAwesome" aria-hidden="true">></b>' + '\n' +   
     '        </button>' + '\n' +
-    '        <button v-on:click="moveRight()" style="margin-bottom: 30px;" >' + '\n' +
+    '        <button type="button" v-on:click="moveRight()" style="margin-bottom: 30px;" >' + '\n' +
     '            <i v-if="fontAwesome" class="fa fa-caret-right fa-2x" aria-hidden="true"></i>' + '\n' +
     '            <b v-if="!fontAwesome" aria-hidden="true">>></b>' + '\n' +   
     '        </button>' + '\n' +
-    '        <button v-on:click="moveLeft()">' + '\n' +
+    '        <button type="button" v-on:click="moveLeft()">' + '\n' +
     '            <i v-if="fontAwesome" class="fa fa-caret-left fa-2x" aria-hidden="true"></i>' + '\n' +
     '            <b v-if="!fontAwesome" aria-hidden="true"><</b>' + '\n' +      
     '        </button>' + '\n' +
-    '        <button v-on:click="moveAllLeft()">' + '\n' +
+    '        <button type="button" v-on:click="moveAllLeft()">' + '\n' +
     '            <i v-if="fontAwesome" class="fa fa-backward" aria-hidden="true"></i>' + '\n' +
     '            <b v-if="!fontAwesome" aria-hidden="true"><<</b>' + '\n' +   
     '        </button>' + '\n' +
@@ -127,7 +125,7 @@ var vue = Vue.component("mover", {
     '' + '\n' +
     '    <div id="MoverRight" class="mover-panel-box">' + '\n' +
     '        <div class="mover-header">{{titleRight}}</div>' + '\n' +
-    '        <div :id="targetId + \'RightItems\'" class="mover-panel" style="overflow-y: auto;">\n' +
+    '        <div :id="targetId + \'RightItems\'" class="mover-panel">\n' +
     '        <div class="mover-item"' + '\n' +
     '                v-for="item in selectedItems"' + '\n' +
     '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
@@ -152,9 +150,7 @@ var vue = Vue.component("mover", {
                     ghostClass: "mover-ghost",
                     chosenClass: "mover-selected",
                     onAdd: vm.onListDrop,
-                    onUpdate: vm.onSorted,
-                    onEnd: vm.OnEnd,
-                    onMove: vm.onMove
+                    onUpdate: vm.onSorted,                    
                 };                
 
                 var targetId = vue.targetId;
@@ -173,16 +169,14 @@ var vue = Vue.component("mover", {
                         item = items[0];
                     if (!item) return;
                 }
-
-                console.log("selectItem: ", item, items);
-
+                              
                 items.forEach(function (itm) {
                     itm.isSelected = false;
                 });
                 item.isSelected = true;
                 vm.selectedItem = item;
                 vm.selectedList = items;
-                console.log("selected item: " + item.displayValue);
+              
             },
             moveRight: function (item, index) {
                 if (!item) {
@@ -263,7 +257,6 @@ var vue = Vue.component("mover", {
                 }, 10);
             },
             onSorted: function (e) {
-                console.log("on sorted fired: ", e.item,e.oldIndex, e.newIndex);                
 
                 var key = e.item.dataset["id"];
                 var side = e.item.dataset["side"];
@@ -286,9 +279,7 @@ var vue = Vue.component("mover", {
                     return;
 
                 setTimeout(function () {
-                    list.splice(e.oldIndex, 1);
-                    console.log("removed", e.oldIndex, e.newIndex, list);
-
+                    list.splice(e.oldIndex, 1);                    
                     list.splice(e.newIndex, 0, item);
 
                     if (side == "left") {
@@ -301,8 +292,7 @@ var vue = Vue.component("mover", {
                     }
                 });
             },
-            onListDrop: function (e) {
-                console.log("onListDrop");
+            onListDrop: function (e) {                
                 var key = e.item.dataset["id"];
                 var side = e.item.dataset["side"];
                 var insertAt = e.newIndex;
@@ -339,12 +329,6 @@ var vue = Vue.component("mover", {
                     });
                 }
 
-            },
-            onEnd: function(e) {
-                console.log("on end fired",e);
-            },
-            onMove: function(e) {
-                console.log("on move fired",e);
             },
             // removes dupes from unselected list that exist in selected items
             normalizeListValues: function () {
