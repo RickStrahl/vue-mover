@@ -121,16 +121,20 @@ var vm = {
     for (var i = 0; i < vm.selectedItems.length; i++) {
       var element = vm.selectedItems[i];
       s += element.displayValue + "\r\n";
-    }
+    }    
 
     alert('ready to save ' + vm.selectedItems.length + 
          ' items from Top Mover.\r\n' + s);
+  },
+  itemMoved: function(itemInfo){   
+    var item = itemInfo.Item;
+    var targetList = itemInfo.targetList;   
+    console.log("Item moved to the " + itemInfo.listType, itemInfo );
   }
 } 
 
-
 var app = new Vue({
       el: "#Body",
-      data: function() { return vm; }
-});
+      data: function() { return vm; }   
+    });
 

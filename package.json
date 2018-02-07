@@ -1,6 +1,6 @@
 {
   "name": "vue-mover",
-  "version": "0.1.16",
+  "version": "0.3.2",
   "description": "A simple list picker vue-component, with drag and drop and sortable items.",
   "main": "vue-mover.js",
   "scripts": {

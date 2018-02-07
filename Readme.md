@@ -1,8 +1,7 @@
 # Vue-Mover
 
-A simple list picker vue-component, with drag and drop and sortable items.
+A simple list picker vue-component, with drag and drop and sortable items. Uses sortable.js for the 
 
-> Note: this is a playground component as I'm experimenting and figuring out Vue. use at your own risk. [Feedback welcome](https://github.com/RickStrahl/vue-mover/issues).
 
 * [Try it out](https://rawgit.com/RickStrahl/vue-mover/master/moverComponentSample.html)
 
@@ -13,6 +12,9 @@ Support:
 * Drag and drop sorting
 
 ![](vue-mover.png)
+
+@icon-info-circle
+
 
 ### Syntax:
 Inside of a Vue application use this markup:
@@ -29,6 +31,7 @@ Inside of a Vue application use this markup:
      title-left="Available Items"
      title-right="Selected Items"
      moved-item-location="top | bottom"
+     @item-moved="itemMovedHandler"
      >
 </mover>
 ```
@@ -135,6 +138,24 @@ You can override the styling of the various styles in the `vue-mover.css` style 
 
 If you have multiple movers prefix your tags with the mover's target id to keep the CSS separate. The default ID is `Mover`.
 
+#### `item-moved` Event
+The component fires an ItemMoved event which is fired when an item is moved from left to right or right to left. The event is hooked up with:
+
+```
+@item-moved="itemMovedHandler"
+```
+
+which should be mapped to a method on your model:
+
+```js
+itemMovedHandler: function(itemMovedInfo) {
+    var item = itemMovedInfo.item;          // the item that was moved
+    var list = itemMovedInfo.targetList;    // list that was updated
+    var type = itemMovedInfo.listType       // "left", "right"
+}
+```
+
+
 ### Dependencies
 
 * [font-awesome](http://fontawesome.io)
@@ -161,7 +182,12 @@ IN NO EVENT SHALL THE AUTHOR, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIB
 
 ### Change Log
 
-#### 0.30
+#### 0.3.2
+
+* **Add `item-moved` Event**  
+Add `item-moved` event that captures an object that returns the item moved, the target list it was dropped into and the list type (left or right).
+
+#### 0.3.0
 
 * **Add moved-item-location Attribute**   
 Added an `move-item-location` Attribute that determines whether items that are moved using the mover buttons are added at the `top` of `bottom` of the individual lists.

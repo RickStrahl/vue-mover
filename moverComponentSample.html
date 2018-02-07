@@ -28,7 +28,8 @@
             
             <mover :left-items="unselectedItems" :right-items="selectedItems"            
                    title-left="Available Items" title-right="Selected Items" 
-                   moved-item-location="bottom"
+                   moved-item-location="bottom"                   
+                   v-on:item-moved="itemMoved"
                    v-cloak></mover>
 
 
@@ -38,7 +39,8 @@
                 :font-awesome="false"                
                 title-left="More Available Items"                
                 title-right="More Selected Items" v-cloak
-                target-id="Mover2"></mover>             
+                target-id="Mover2"                
+                ></mover>             
             
             <hr />            
             <button class="btn btn-primary" @click="saveItems()" >Show Selected Items</button> 

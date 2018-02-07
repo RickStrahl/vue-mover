@@ -3,8 +3,8 @@
      -------------------
      by Rick Strahl, West Wind Technologies
 
-     Version 0.3.0
-     February 8th, 2018
+     Version 0.3.2
+     February 9th, 2018
      
      depends on: 
      -----------
@@ -25,7 +25,9 @@
              title-right="Selected Items"
              moved-item-location="top"
              :font-awesome="true"
-             targetId="MyMover">
+             targetId="MyMover"
+             @item-moved="onItemMoved"
+             >
        </mover>
 
     Vue code:
@@ -97,6 +99,12 @@ var vue = Vue.component("mover", {
             default: true
         }
     },
+    methods: {
+        raiseItemMoved: function _raiseItemMoved(item, targetList, listType) { 
+            this.lastMovedItem =  { item: item, targetList, listType };
+            this.$emit('item-moved', this.lastMovedItem);
+        },    
+    },
     template: '<div :id="targetId" class="mover-container">' + '\n' +
     '    <div id="MoverLeft" class="mover-panel-box mover-left">' + '\n' +
     '        <div class="mover-header">{{titleLeft}}</div>' + '\n' +
@@ -148,7 +156,8 @@ var vue = Vue.component("mover", {
             selectedItem: {},
             selectedList: null,
             selectedItems: this.rightItems,
-            unselectedItems: this.leftItems,                       
+            unselectedItems: this.leftItems,  
+            lastMovedItem: null,                     
 
             // hook up sortable - call from end of data retrieval
             initialize: function (vue) {
@@ -221,6 +230,7 @@ var vue = Vue.component("mover", {
 
                 setTimeout(function () {
                     vm.selectItem(item, vm.selectedItems);
+                    vue.raiseItemMoved(item,vm.selectedItems, "right");
                 }, 10);
             },
             moveLeft: function (item, index) {
@@ -255,7 +265,11 @@ var vue = Vue.component("mover", {
                     }
                 }
 
-                setTimeout(function () { vm.selectItem(item, vm.unselectedItems); }, 10);
+                setTimeout(function () { 
+                    vm.selectItem(item, vm.unselectedItems);                     
+                    vue.raiseItemMoved(item, vm.unselectedItems, "left");
+                }, 10);
+
             },
             moveAllRight: function () {
                 for (var i = vm.unselectedItems.length - 1; i >= 0; i--) {
