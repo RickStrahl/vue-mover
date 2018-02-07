@@ -12,9 +12,9 @@ module.exports = {
   },
   plugins: [    
     new UglifyJSPlugin( { sourceMap: true }),
-    new ExtractTextPlugin("styles.css"),
+    
     new OptimizeCssAssetsPlugin({
-      assetNameRegExp: /\.optimize\.css$/g,
+      assetNameRegExp: /.css$/g,      
       cssProcessor: require('cssnano'),
       cssProcessorOptions: { discardComments: {removeAll: true } },
     })

@@ -21,8 +21,9 @@
      ------
       <mover :left-items="selectedItems"
              :right-items="unselectedItems"
-             titleLeft="Available Items"
-             titleRight="Selected Items"
+             title-left="Available Items"
+             title-right="Selected Items"
+             moved-item-location="top"
              :font-awesome="true"
              targetId="MyMover">
        </mover>
@@ -72,6 +73,11 @@ var vue = Vue.component("mover", {
             type: String,
             default: 'Selected'
         },
+        // Location where moved items are dropped: top, bottom
+        movedItemLocation: {
+            type: String,
+            default: "top"
+        },
         // Array of objects to bind to left list. { value: "xxx", displayValue: "show", isSelected: false}
         leftItems: Array,
         // Array of objects to bind right list. { value: "xxx", displayValue: "show", isSelected: false}
@@ -92,10 +98,10 @@ var vue = Vue.component("mover", {
         }
     },
     template: '<div :id="targetId" class="mover-container">' + '\n' +
-    '    <div id="MoverLeft" class="mover-panel-box">' + '\n' +
+    '    <div id="MoverLeft" class="mover-panel-box mover-left">' + '\n' +
     '        <div class="mover-header">{{titleLeft}}</div>' + '\n' +
-    '        <div :id="targetId + \'LeftItems\'" class="mover-panel">\n' +
-    '        <div class="mover-item"' + '\n' +
+    '        <div :id="targetId + \'LeftItems\'" class="mover-panel ">\n' +
+    '           <div class="mover-item"' + '\n' +
     '                v-for="item in unselectedItems"' + '\n' +
     '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
     '                v-on:click="selectItem(item, unselectedItems)"' + '\n' +
@@ -107,11 +113,11 @@ var vue = Vue.component("mover", {
     '    <div class="mover-controls" >' + '\n' +
     '        <button type="button" v-on:click="moveAllRight()">' + '\n' +
     '                <i v-if="fontAwesome" class="fa fa-forward fa-1.5x" aria-hidden="true"></i>' + '\n' +
-    '                <b v-if="!fontAwesome" aria-hidden="true">></b>' + '\n' +   
+    '                <b v-if="!fontAwesome" aria-hidden="true">>></b>' + '\n' +   
     '        </button>' + '\n' +
     '        <button type="button" v-on:click="moveRight()" style="margin-bottom: 30px;" >' + '\n' +
     '            <i v-if="fontAwesome" class="fa fa-caret-right fa-2x" aria-hidden="true"></i>' + '\n' +
-    '            <b v-if="!fontAwesome" aria-hidden="true">>></b>' + '\n' +   
+    '            <b v-if="!fontAwesome" aria-hidden="true">></b>' + '\n' +   
     '        </button>' + '\n' +
     '        <button type="button" v-on:click="moveLeft()">' + '\n' +
     '            <i v-if="fontAwesome" class="fa fa-caret-left fa-2x" aria-hidden="true"></i>' + '\n' +
@@ -124,10 +130,10 @@ var vue = Vue.component("mover", {
     '' + '\n' +
     '    </div>' + '\n' +
     '' + '\n' +
-    '    <div id="MoverRight" class="mover-panel-box">' + '\n' +
+    '    <div id="MoverRight" class="mover-panel-box mover-right">' + '\n' +
     '        <div class="mover-header">{{titleRight}}</div>' + '\n' +
     '        <div :id="targetId + \'RightItems\'" class="mover-panel">\n' +
-    '        <div class="mover-item"' + '\n' +
+    '           <div class="mover-item"' + '\n' +
     '                v-for="item in selectedItems"' + '\n' +
     '                :class="{\'mover-selected\': item.isSelected }"' + '\n' +
     '                v-on:click="selectItem(item, selectedItems)"' + '\n' +
@@ -197,11 +203,21 @@ var vue = Vue.component("mover", {
                 if (vm.unselectedItems.length > 0)
                     vm.selectItem(vm.unselectedItems[idx], vm.unselectedItems);
 
-
                 if (typeof index === "number")
                     vm.selectedItems.splice(index, 0, item);
-                else
-                    vm.selectedItems.unshift(item);
+                else{
+                    if(vue.movedItemLocation == "top")
+                        vm.selectedItems.unshift(item);
+                    else{
+                        vm.selectedItems.push(item);                        
+                        var container = this.$el.querySelector(".mover-right>.mover-panel");
+                        setTimeout(function() {
+                            
+                            container.scrollTop = container.scrollHeight;                        
+                        });                        
+                    }
+                        
+                }
 
                 setTimeout(function () {
                     vm.selectItem(item, vm.selectedItems);
@@ -228,7 +244,16 @@ var vue = Vue.component("mover", {
                 if (typeof index === "number")
                     vm.unselectedItems.splice(index, 0, item);
                 else
-                    vm.unselectedItems.unshift(item);
+                {
+                    if(vue.movedItemLocation == "top")
+                        vm.unselectedItems.unshift(item);
+                    else
+                    {
+                        vm.unselectedItems.push(item);
+                        var container = this.$el.querySelector(".mover-left>.mover-panel");
+                        setTimeout(function() { container.scrollTop = container.scrollHeight; });                        
+                    }
+                }
 
                 setTimeout(function () { vm.selectItem(item, vm.unselectedItems); }, 10);
             },

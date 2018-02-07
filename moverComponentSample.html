@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,15 +26,16 @@
         <h1>{{pageTitle}}</h1>
         <div class="container" style="margin-top: 80px">
             
-            <mover :left-items="unselectedItems" :right-items="selectedItems"
+            <mover :left-items="unselectedItems" :right-items="selectedItems"            
                    title-left="Available Items" title-right="Selected Items" 
+                   moved-item-location="bottom"
                    v-cloak></mover>
 
 
              <mover 
                 :left-items="unselectedItems2" 
                 :right-items="selectedItems2"
-                :font-awesome="false"
+                :font-awesome="false"                
                 title-left="More Available Items"                
                 title-right="More Selected Items" v-cloak
                 target-id="Mover2"></mover>             

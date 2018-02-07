@@ -26,8 +26,10 @@ Inside of a Vue application use this markup:
      target-id="MyMover"
      :left-items="selectedItems"
      :right-items="unselectedItems"
-     titleLeft="Available Items"
-     titleRight="Selected Items">
+     title-left="Available Items"
+     title-right="Selected Items"
+     moved-item-location="top | bottom"
+     >
 </mover>
 ```
 
@@ -146,3 +148,20 @@ To build use:
 ```
 npm run build
 ```
+
+### License
+
+Licensed under the MIT License. There's no charge to use, integrate or modify the code for this project. You are free to use it in personal, commercial, government and any other type of application.
+
+All source code is copyright © Rick Strahl, West Wind Technologies, regardless of changes made to them. Any source code modifications must leave the original copyright code headers intact.
+
+Warranty Disclaimer: No Warranty!
+
+IN NO EVENT SHALL THE AUTHOR, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR REDISTRIBUTE THIS PROGRAM AND DOCUMENTATION, BE LIABLE FOR ANY COMMERCIAL, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PROGRAM INCLUDING, BUT NOT LIMITED TO, LOSS OF DATA OR DATA BEING RENDERED INACCURATE OR LOSSES SUSTAINED BY YOU OR LOSSES SUSTAINED BY THIRD PARTIES OR A FAILURE OF THE PROGRAM TO OPERATE WITH ANY OTHER PROGRAMS, EVEN IF YOU OR OTHER PARTIES HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+### Change Log
+
+#### 0.30
+
+* **Add moved-item-location Attribute**   
+Added an `move-item-location` Attribute that determines whether items that are moved using the mover buttons are added at the `top` of `bottom` of the individual lists.
