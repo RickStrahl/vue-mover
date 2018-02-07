@@ -72,14 +72,14 @@
      -------------------
      by Rick Strahl, West Wind Technologies
 
-     Version 0.1.16
-     Oct. 11, 2017
+     Version 0.3.0
+     February 8th, 2018
      
      depends on: 
      -----------
      CSS:     
      * font-awesome   (optional)
-     * moverComponent.css
+     * vue-mover.css
      
      Script:
      * vuejs
